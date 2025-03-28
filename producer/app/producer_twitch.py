@@ -41,7 +41,6 @@ class Bot(commands.Bot):
     def __init__(self, producer):
         # Initialise our Bot with our access token, prefix and a list of channels to join on boot...
         channels = get_live_stream_channels(game_id=509658, language="en", first=10)
-        # super().__init__(token=OAUTH_TOKEN, prefix='?', initial_channels=['wankilstudio'])
         super().__init__(token=OAUTH_TOKEN, prefix='?', initial_channels=channels)
         self.producer = producer
 
@@ -64,28 +63,6 @@ class Bot(commands.Bot):
 
 
 if __name__=="__main__":
-    # admin = KafkaAdminClient(bootstrap_servers='kafka:29092', api_version=(0, 10, 1))
-    # server_topics = admin.list_topics()
-
-    # topic = "twitch-messages"
-    # num_partition = 1
-
-    # print(server_topics)
-    # # création du topic si celui-ci n'est pas déjà créé
-    # if topic not in server_topics:
-    #     try:
-    #         print("create new topic :", topic)
-
-    #         topic1 = NewTopic(name=topic,
-    #                          num_partitions=num_partition,
-    #                          replication_factor=1)
-    #         admin.create_topics([topic1])
-    #     except Exception:
-    #         print("error")
-    #         pass
-    # else:
-    #     print(topic,"est déjà créé")
-
     producer = KafkaProducer(bootstrap_servers="kafka:29092", api_version=(0, 10, 1))
     bot = Bot(producer)
     bot.run()

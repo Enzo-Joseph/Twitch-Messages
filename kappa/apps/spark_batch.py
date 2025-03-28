@@ -13,6 +13,7 @@ messages_per_user = spark.read.parquet("/opt/spark-data/data/messages_per_user")
 most_frequent_words = spark.read.parquet("/opt/spark-data/data/most_frequent_words")
 twich_messages = spark.read.parquet("/opt/spark-data/data/twitch_messages")
 
+# Compute the number of words per 10 minutes
 print("Computing the number of words per 10 minutes...")
 new_messages_per_minute = messages_per_minute \
     .groupBy("channel", F.window("timestamp", "10 minutes")) \
@@ -21,6 +22,7 @@ new_messages_per_minute = messages_per_minute \
     .selectExpr("channel", "window.start as timestamp", "wordcount") \
     .orderBy("channel", "timestamp")
 
+# Compute the number of messages per user
 print("Computing the number of messages per user...")
 new_messages_per_user = messages_per_user \
     .groupBy("channel", "user") \
@@ -33,9 +35,7 @@ new_messages_per_user = messages_per_user \
     .drop("rank") \
     .orderBy("channel", F.desc("msgcount")) \
     
-# new_messages_per_user.show()
-
-# Show the most frequent words per channel
+# Compute the most frequent words
 print("Computing the most frequent words...")
 new_most_frequent_words = most_frequent_words \
     .groupBy("channel", "word") \

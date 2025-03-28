@@ -4,7 +4,7 @@ session=clstr.connect()
 
 session.execute("DROP KEYSPACE IF EXISTS projet;")
 
-
+# Reset ketspace
 qry=''' 
 CREATE KEYSPACE IF NOT EXISTS projet 
 WITH replication = {

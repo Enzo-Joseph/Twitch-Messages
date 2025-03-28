@@ -116,20 +116,23 @@ services:
     ports:
       - "9042:9042"
     environment:
-      - CASSANDRA_SEEDS=cassandra1,cassandra2
+      # - CASSANDRA_SEEDS=cassandra1,cassandra2
+      - CASSANDRA_SEEDS=cassandra1
       - HEAP_NEWSIZE=128M
       - MAX_HEAP_SIZE=2048M
     networks:
       - network1
-  cassandra2:
-    image: cassandra:latest
-    container_name: cassandra2
-    environment:
-      - CASSANDRA_SEEDS=cassandra1,cassandra2
-      - HEAP_NEWSIZE=128M
-      - MAX_HEAP_SIZE=2048M
+
+  grafana:
+    image: grafana/grafana-oss
+    container_name: grafana
+    depends_on:
+      - cassandra1
+    ports:
+      - "3000:3000"
     networks:
       - network1
+    
 
 networks:
   network1:

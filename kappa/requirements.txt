@@ -1,0 +1,4 @@
+pandas
+pyspark
+cassandra-driver
+cassandra-driver[graph]

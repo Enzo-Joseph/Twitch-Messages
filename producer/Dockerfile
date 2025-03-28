@@ -19,14 +19,21 @@ RUN apk add --no-cache bash
 WORKDIR /producer
 
 # Install dependencies
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+# Ensure the requirements.txt file is in the same directory as the Dockerfile
+COPY ./requirements.txt /producer/requirements.txt
+# RUN pip install -r /producer/requirements.txt
+# RUN pip install dotenv
+
+
+
 
 # Copy source code
 COPY ./app ./app
+RUN pip install --no-cache-dir --upgrade pip \
+  && pip install --no-cache-dir -r requirements.txt
 
 # Run the application
-CMD ["bash"]
-# CMD ["python", "app/producer.py","velib-stations"]
+# CMD ["bash"]
+# CMD ["python", "app/producer_twitch.py"]
 
 # CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

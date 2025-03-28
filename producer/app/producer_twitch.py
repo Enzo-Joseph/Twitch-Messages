@@ -4,20 +4,20 @@ from kafka import KafkaProducer, KafkaClient
 from kafka.admin import KafkaAdminClient, NewTopic
 from twitchio.ext import commands
 import os
-
+from dotenv import load_dotenv
+load_dotenv()
 
 SERVER ="irc.chat.twitch.tv"
 PORT = 6667
-CLIENT_ID = os.getenv("TWITCH_CLIENT_ID")
-OAUTH_TOKEN = os.getenv("TWITCH_OAUTH_TOKEN")
+CLIENT_ID = os.getenv("CLIENT_ID")
+OAUTH_TOKEN = os.getenv("OAUTH_TOKEN")
 BOT_NICKNAME = "bot"
-
 
 def get_live_stream_channels(game_id=None, language=None, first=20):
     url = "https://api.twitch.tv/helix/streams"
     headers = {
         "Client-Id": CLIENT_ID,
-        "Authorization": f"Bearer {OAUTH_TOKEN.removeprefix('oauth:')}"
+        "Authorization": f"Bearer {OAUTH_TOKEN}"
     }
     params = {"first": first}  # Default: Get top 20 live streams
 
@@ -31,6 +31,8 @@ def get_live_stream_channels(game_id=None, language=None, first=20):
 
     channel_names = [channel["user_name"] for channel in data["data"]]
 
+    print(channel_names)
+
     return channel_names
     
 
@@ -38,7 +40,7 @@ class Bot(commands.Bot):
 
     def __init__(self, producer):
         # Initialise our Bot with our access token, prefix and a list of channels to join on boot...
-        channels = get_live_stream_channels(game_id=509658, language="en", first=5)
+        channels = get_live_stream_channels(game_id=509658, language="en", first=10)
         # super().__init__(token=OAUTH_TOKEN, prefix='?', initial_channels=['wankilstudio'])
         super().__init__(token=OAUTH_TOKEN, prefix='?', initial_channels=channels)
         self.producer = producer
@@ -49,7 +51,7 @@ class Bot(commands.Bot):
 
     async def event_message(self, message):
         # Print messages to console
-        # print("{} {} {} : {}".format(message.timestamp.strftime("%Y-%m-%d %H:%M:%S"), message.channel.name, message.author.name, message.content))
+        print("{} {} {} : {}".format(message.timestamp.strftime("%Y-%m-%d %H:%M:%S"), message.channel.name, message.author.name, message.content))
 
         # Handle commands
         self.producer.send("twitch_messages", json.dumps({
@@ -83,6 +85,7 @@ if __name__=="__main__":
     #         pass
     # else:
     #     print(topic,"est déjà créé")
+
     producer = KafkaProducer(bootstrap_servers="kafka:29092", api_version=(0, 10, 1))
     bot = Bot(producer)
     bot.run()

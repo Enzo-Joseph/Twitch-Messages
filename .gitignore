@@ -1,0 +1,6 @@
+# Ignore environment variable files
+.env
+.env.*
+
+# Ignore the saved data
+kappa/data

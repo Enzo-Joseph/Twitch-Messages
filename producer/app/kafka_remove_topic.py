@@ -6,7 +6,7 @@ def main():
     admin = KafkaAdminClient(bootstrap_servers='kafka:29092')
     server_topics = admin.list_topics()
 
-    topic = "velib-stations"
+    topic = "twitch_messages"
     num_partition = 1
 
     print(server_topics)

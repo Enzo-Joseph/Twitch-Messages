@@ -6,7 +6,7 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: 'C:\Users\salla\OneDrive\Documents\Cours\A3\Architecture_Big_Data\Projet\producer\app'
+      device: 'C:\Users\salla\OneDrive\Documents\Cours\A3\Architecture_Big_Data\twitch_messages\producer\app'
 
 services:
   producer:

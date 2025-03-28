@@ -2,10 +2,15 @@ FROM spark:python3-java17 as builder
 
 USER root
 
-RUN pip install pandas --no-cache-dir
-RUN pip install pyspark --no-cache-dir
-RUN pip install cassandra-driver  --no-cache-dir
-RUN pip install cassandra-driver[graph]  --no-cache-dir
+# RUN pip install pandas --no-cache-dir
+# RUN pip install pyspark --no-cache-dir
+# RUN pip install cassandra-driver  --no-cache-dir
+# RUN pip install cassandra-driver[graph]  --no-cache-dir
+
+COPY requirements.txt ./
+
+RUN pip install --no-cache-dir --upgrade pip \
+  && pip install --no-cache-dir -r requirements.txt
 
 RUN apt-get update; apt install -y netcat
 

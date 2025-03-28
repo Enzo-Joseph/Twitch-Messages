@@ -1,4 +1,5 @@
 # Processing Twitch Messages in Real Time
+![streaming dashboard](image.png)
 
 This is an academic project to learn about Big Data Architecture. It is an implementation of the Lambda architecture to store and process twitch livestreams messages in real time. THe architecture is developped in Docker.
 
@@ -45,10 +46,6 @@ You can open Grafana at http://localhost:3000/. I am not sure this will work as 
 
 ## Processes
 Some simple calculations are performed both in real time and in batch. The first task is to evaluate the number of words per minute per channel. We also compute the most frequent words for each channel and also the most active users.
-
-## Results
-Here is the streaming dashboard in Grafana.
-![streaming dashboard](image.png)
 
 ## Discussion
 More processes can be done, by including the evolution of the number of viewers to better compute an engagement indicator for example.

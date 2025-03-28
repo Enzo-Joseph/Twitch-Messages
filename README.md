@@ -16,10 +16,11 @@ IF NEEDED, open a terminal and run the following
 ```docker exec -ti producer bash```     
 ```cd app```       
 ```pip install -r requirements.txt```   
+
 Open another terminal and run   
-```docker exec -ti spark-master bash``` 
-```cd ../spark-apps``` 
-```pip install requirements.txt```  
+```docker exec -ti spark-master bash```     
+```cd ../spark-apps```      
+```pip install requirements.txt```      
 
 Now you can start the producer to get the Twitch messages sent to Kafka. Ine the terminal accessing the producer container, run     
 ```python3 kafka_remove_topic.py```     
@@ -34,7 +35,7 @@ Open a new terminal to access Cassandra
 ```docker exec -ti cassandra1 cqlsh```  
 ```use projet;```   
 ```describe tables;```  
-    
+
 Here are some commands you can run :    
 ```select * from wordcount;```  
 ```select * from wordfreq limit 10;```  
@@ -45,5 +46,9 @@ You can open Grafana at http://localhost:3000/. I am not sure this will work as 
 ## Processes
 Some simple calculations are performed both in real time and in batch. The first task is to evaluate the number of words per minute per channel. We also compute the most frequent words for each channel and also the most active users.
 
-# Discutions
+## Results
+Here is the streaming dashboard in Grafana.
+![streaming dashboard](image.png)
+
+## Discussion
 More processes can be done, by including the evolution of the number of viewers to better compute an engagement indicator for example.

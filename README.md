@@ -12,11 +12,11 @@ Make sure to have a .env file in ```/producer/app/``` to be able to query the Tw
 Get the IP adress of ```cassandra1``` container (in inspect/network) and replace it in ```kappa/apps/cassandra_create_tables.py```
 
 Then you can try to run ```start.sh``` script but often it fails. This can be because pip didn't install the python packages needed.
-IF NEEDED, open a terminal and run the following
-```docker exec -ti producer bash``` 
-```cd app``` 
-```pip install -r requirements.txt```
-Open another terminal and run
+IF NEEDED, open a terminal and run the following    
+```docker exec -ti producer bash```     
+```cd app```       
+```pip install -r requirements.txt```   
+Open another terminal and run   
 ```docker exec -ti spark-master bash``` 
 ```cd ../spark-apps``` 
 ```pip install requirements.txt```
